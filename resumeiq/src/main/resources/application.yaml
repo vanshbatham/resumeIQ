@@ -12,10 +12,12 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: false
+    open-in-view: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
 
   flyway:
     enabled: true
@@ -38,6 +40,11 @@ springdoc:
     tags-sorter: alpha
     operations-sorter: alpha
   packages-to-scan: com.resumeiq.controller
+
+jwt:
+  secret: cmVzdW1laXEtand0LXNlY3JldC1rZXktMjU2LWJpdC1mb3ItZGV2ZWxvcG1lbnQ=
+  access-token-expiry-ms: 900000       # 15 minutes
+  refresh-token-expiry-days: 7
 
 logging:
   level:
