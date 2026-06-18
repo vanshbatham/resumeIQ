@@ -18,11 +18,16 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
-
   flyway:
     enabled: true
     locations: classpath:db/migration
     baseline-on-migrate: false
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 6MB
 
   cache:
     type: caffeine
@@ -43,8 +48,12 @@ springdoc:
 
 jwt:
   secret: cmVzdW1laXEtand0LXNlY3JldC1rZXktMjU2LWJpdC1mb3ItZGV2ZWxvcG1lbnQ=
-  access-token-expiry-ms: 900000       # 15 minutes
+  access-token-expiry-ms: 900000
   refresh-token-expiry-days: 7
+
+file:
+  storage:
+    upload-dir: ./uploads
 
 logging:
   level:
