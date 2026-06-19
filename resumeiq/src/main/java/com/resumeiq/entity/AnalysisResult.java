@@ -25,11 +25,18 @@ public class AnalysisResult {
     @JoinColumn(name = "resume_id", nullable = false)
     private Resume resume;
 
+    @Column(name = "overall_score")
+    private Double overallScore;
+
     @Column(name = "ats_score")
     private Double atsScore;
 
     @Column(name = "readability_score")
     private Double readabilityScore;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "readability_data", columnDefinition = "jsonb")
+    private String readabilityData;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "section_completeness", columnDefinition = "jsonb")
@@ -46,6 +53,10 @@ public class AnalysisResult {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "grammar_issues", columnDefinition = "jsonb")
     private String grammarIssues;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "keyword_gap_analysis", columnDefinition = "jsonb")
+    private String keywordGapAnalysis;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
