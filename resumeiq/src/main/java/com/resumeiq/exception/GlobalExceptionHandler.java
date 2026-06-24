@@ -1,6 +1,7 @@
 package com.resumeiq.exception;
 
 import com.resumeiq.dto.response.ErrorResponse;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,6 +84,25 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleMaxUploadSize(
             MaxUploadSizeExceededException ex, HttpServletRequest request) {
         return build(HttpStatus.PAYLOAD_TOO_LARGE, "File size exceeds the 5MB limit.", request);
+    }
+
+    @ExceptionHandler(AiServiceException.class)
+    public ResponseEntity<ErrorResponse> handleAiService(
+            AiServiceException ex, HttpServletRequest request) {
+        return build(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage(), request);
+    }
+
+    @ExceptionHandler(AiRateLimitException.class)
+    public ResponseEntity<ErrorResponse> handleAiRateLimit(
+            AiRateLimitException ex, HttpServletRequest request) {
+        return build(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage(), request);
+    }
+
+    @ExceptionHandler(RequestNotPermitted.class)
+    public ResponseEntity<ErrorResponse> handleResilientRateLimit(
+            RequestNotPermitted ex, HttpServletRequest request) {
+        return build(HttpStatus.TOO_MANY_REQUESTS,
+                "AI service is temporarily rate-limited. Please wait a moment and try again.", request);
     }
 
     private ResponseEntity<ErrorResponse> build(

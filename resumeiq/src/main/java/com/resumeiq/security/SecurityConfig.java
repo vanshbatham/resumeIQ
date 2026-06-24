@@ -33,6 +33,7 @@ public class SecurityConfig {
             "/api/v1/analysis/keyword-gap",
             "/api/v1/analysis/*/latest",
             "/api/v1/analysis/*/report",
+            "/api/v1/ai/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/api-docs/**",

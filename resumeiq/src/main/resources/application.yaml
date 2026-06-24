@@ -55,7 +55,25 @@ file:
   storage:
     upload-dir: ./uploads
 
+ai:
+  provider: groq
+  groq:
+    api-key: ${GROQ_API_KEY:}
+    model: llama-3.3-70b-versatile
+    base-url: https://api.groq.com/openai/v1
+    temperature: 0.1
+    max-tokens: 2000
+
+resilience4j:
+  ratelimiter:
+    instances:
+      groq-api:
+        limit-for-period: 28          # just under Groq's 30 RPM free tier limit
+        limit-refresh-period: 60s
+        timeout-duration: 5s          # wait max 5s for a permit, then fail fast
+
 logging:
   level:
     com.resumeiq: INFO
     org.flywaydb: INFO
+    io.github.resilience4j: WARN
